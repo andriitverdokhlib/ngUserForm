@@ -1,0 +1,51 @@
+<div>
+    <h1>Summary</h1>
+</div>
+
+<div class="form-block">
+    <h3>Bio:</h3>
+    <p>{{questionnaireValues.bio}}</p>
+</div>
+
+<div class="form-block">
+    <h3>Services:</h3>
+
+    <ng-container *ngIf="questionnaireValues.services.software">
+        <p>Software development</p>
+    </ng-container>
+
+    <ng-container *ngIf="questionnaireValues.services.customerSupport">
+        <p>Customer support</p>
+    </ng-container>
+
+    <ng-container 
+        *ngIf="questionnaireValues.services.other.selected && questionnaireValues.additionalOptions.other">
+        <p>Other:</p>
+        <p>{{questionnaireValues.services.other.text}}</p>
+    </ng-container>
+</div>
+
+<div class="form-block">
+    <h3>Question:</h3>
+
+    <p>Text: {{questionnaireValues.question.text}}</p>
+    <p>Type: {{questionnaireValues.question.type}}</p>
+
+    <hr>
+
+    <ng-container *ngFor="let answer of questionnaireValues.answer; let i = index">
+        <ng-container *ngIf="answer.answerOption">
+            <p>Option: {{answer.answerOption}}</p>
+
+            <ng-container *ngIf="answer.selectComment">
+                <p>Comment: {{answer.comment}}</p>
+            </ng-container>
+
+            <hr>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="questionnaireValues.additionalOptions.questionIsRequired">
+        <p>Question is required</p>
+    </ng-container>
+</div>

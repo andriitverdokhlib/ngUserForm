@@ -4,13 +4,24 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { PreviewComponent } from './pages/preview/preview.component';
+import { QuestionnaireComponent } from './pages/questionnaire/questionnaire.component';
+import { ValidationErrorComponent } from './pages/questionnaire/validation-error/validation-error.component';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PreviewComponent,
+    QuestionnaireComponent,
+    ValidationErrorComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

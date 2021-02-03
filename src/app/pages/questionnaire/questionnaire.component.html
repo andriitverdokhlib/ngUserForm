@@ -1,0 +1,107 @@
+<div>
+    <h1>
+        Welcome to the Demo Forms Builder
+    </h1>
+</div>
+<form [formGroup]="questionnaireForm" (ngSubmit)="submit()">
+    <div class="tell-us form-block">
+        <div class="row-block">
+            <h3>Please, tell us about yourself</h3>
+        </div>
+
+        <textarea formControlName="bio"></textarea>
+
+        <validation-error 
+            *ngIf="questionnaireForm.controls['bio'].invalid && questionnaireForm.controls['bio'].touched"
+            form="Bio" char="20">
+        </validation-error>
+    </div>
+
+    <div class="select-service form-block">
+        <div class="row-block">
+            <h3>Please, select all the services you'll need</h3>
+        </div>
+
+
+        <div formGroupName="services" class="col-block">
+            <label>
+                <input type="checkbox" formControlName="software">
+                Software Development
+            </label>
+
+            <label>
+                <input type="checkbox" formControlName="customerSupport">
+                Customer support
+            </label>
+            
+            <div formGroupName="other" class="col-block">
+
+                <label>
+                    <input type="checkbox" formControlName="selected" #c>
+                    Other
+                </label>
+
+                <label *ngIf="c.checked">
+                   <input type="text" formControlName="text">
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="additional-questions form-block">
+        <h3>Add a Question</h3>
+
+        <div class="row-block" formGroupName="question">
+            <div class="col-block">
+                <input type="text" formControlName="text" placeholder="Question">
+                <validation-error 
+                    *ngIf="this.questionnaireForm.controls['question'].controls['text'].invalid && this.questionnaireForm.controls['question'].controls['text'].touched"
+                    form="Question" char="5">
+                </validation-error>
+            </div>
+
+            <div class="col-block">
+                <input type="text" placeholder="Question Type" formControlName="type">
+                <validation-error 
+                    *ngIf="this.questionnaireForm.controls['question'].controls['type'].invalid && this.questionnaireForm.controls['question'].controls['type'].touched"
+                    form="Type" char="3">
+                </validation-error>
+            </div>
+            
+            
+        </div>
+
+        <div formArrayName="answer"
+            *ngFor="let item of questionnaireForm.get('answer')['controls']; let i = index" >
+
+            <div [formGroupName]="i" class="col-block input-block">
+                <div class="row-block">
+                    <input type="text" formControlName="answerOption" placeholder="Add answer option">
+                    <input type="checkbox" formControlName="selectComment" #c>
+                </div>
+                <input *ngIf="c.checked" type="text" formControlName="comment" placeholder="Comment"> 
+            </div>
+
+        </div>
+
+        <div formGroupName="additionalOptions" class="col-block">
+            <label>
+                <input type="checkbox" formControlName="other">
+                Include 'Other' option
+            </label>
+
+            <label>
+                <input type="checkbox" formControlName="questionIsRequired">
+                This question is required
+            </label>
+        </div>
+
+
+    </div>
+
+    <input type="submit" value="Preview my answers" [disabled]="questionnaireForm.invalid">
+
+</form>

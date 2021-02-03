@@ -1,0 +1,75 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.row-block {
+    display: flex;
+    flex-direction: row;
+}
+
+.col-block {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.tell-us {
+    min-height: 15vh;
+
+    textarea {
+        height: 8vh;
+        width: 80%;
+        resize: none;
+    }
+}
+
+.select-service {
+    input[type=text] {
+        margin-top: 1vh;
+    }
+}
+
+
+
+.additional-questions {
+    input {
+        margin: 0 1vw 1vw 0;
+    }
+}
+
+input, textarea {
+    &:focus {
+        outline: none;
+    }
+}
+
+input[type=text] { 
+    height: 2vh;
+    border: none;
+    border-bottom: 1px solid rgb(0, 0, 105);
+
+}
+
+input[type=submit] {
+    background: rgb(117, 134, 233);
+    border: none;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);;
+    height: 4vh;
+    color: #fff;
+    text-align: center;
+
+    &:disabled {
+        background: #a6c7cf;
+    }
+}
+
+input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
+    border-bottom: 2px solid rgb(235, 107, 107);
+    border-radius: 2px;
+}
+input.ng-touched.ng-valid, textarea.ng-touched.ng-valid {
+    border-radius: 2px;
+    border-bottom: 2px solid rgb(95, 173, 95);
+}
