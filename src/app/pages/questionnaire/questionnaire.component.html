@@ -52,56 +52,65 @@
     </div>
 
     <div class="additional-questions form-block">
-        <h3>Add a Question</h3>
+        <div class="row-block row-between">
+            <h3>Add a Question</h3>
 
-        <div class="row-block" formGroupName="question">
-            <div class="col-block">
-                <input type="text" formControlName="text" placeholder="Question">
-                <validation-error 
-                    *ngIf="this.questionnaireForm.controls['question'].controls['text'].invalid && this.questionnaireForm.controls['question'].controls['text'].touched"
-                    form="Question" char="5">
-                </validation-error>
-            </div>
-
-            <div class="col-block">
-                <input type="text" placeholder="Question Type" formControlName="type">
-                <validation-error 
-                    *ngIf="this.questionnaireForm.controls['question'].controls['type'].invalid && this.questionnaireForm.controls['question'].controls['type'].touched"
-                    form="Type" char="3">
-                </validation-error>
-            </div>
-            
-            
+            <input type="button" value="+" class="add-btn" 
+                (click)="addQuestionOption()">
         </div>
 
-        <div formArrayName="answer"
-            *ngFor="let item of questionnaireForm.get('answer')['controls']; let i = index" >
-
-            <div [formGroupName]="i" class="col-block input-block">
+        <div class="row-block" formArrayName="questionArray" 
+            *ngFor="let item of questionnaireForm.get('questionArray')['controls']; let i = index">
+            <div class="col-block col-border" [formGroupName]="i">
                 <div class="row-block">
-                    <input type="text" formControlName="answerOption" placeholder="Add answer option">
-                    <input type="checkbox" formControlName="selectComment" #c>
-                </div>
-                <input *ngIf="c.checked" type="text" formControlName="comment" placeholder="Comment"> 
-            </div>
+                    <div class="col-block">
+                        <input type="text" formControlName="question" placeholder="Question">
+                    </div>
 
+                    <div class="row-block">
+                        <div class="col-block">
+                            <input type="text" formControlName="type" placeholder="Question Type">
+                        </div>
+                        
+                        <input type="button" value="-" class="remove-btn" 
+                            (click)="removeQuestionOption(i)">
+                    </div>
+                </div>
+
+                <div class="col-block" formGroupName="answer">
+                    <div class="row-block">
+                        <input type="text" formControlName="answerOption" 
+                            placeholder="Add Answer Option">
+                        <input type="checkbox" formControlName="selectComment" #c>
+                    </div>
+                    
+                    <ng-container *ngIf="c.checked">
+                        <input type="text" formControlName="comment" placeholder="Comment">
+                    </ng-container>
+                    
+                </div>
+
+                <label>
+                    <input type="checkbox" formControlName="questionIsRequired">
+                    This question is required
+                </label>
+                
+            </div>
+            
         </div>
+
 
         <div formGroupName="additionalOptions" class="col-block">
             <label>
                 <input type="checkbox" formControlName="other">
                 Include 'Other' option
             </label>
-
-            <label>
-                <input type="checkbox" formControlName="questionIsRequired">
-                This question is required
-            </label>
         </div>
 
 
     </div>
 
-    <input type="submit" value="Preview my answers" [disabled]="questionnaireForm.invalid">
+    <input type="submit" value="Preview my answers" 
+        [disabled]="questionnaireForm.invalid">
 
 </form>

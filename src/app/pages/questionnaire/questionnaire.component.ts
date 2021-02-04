@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class QuestionnaireComponent implements OnInit {
 
-  public questionnaireForm;
+  public questionnaireForm: FormGroup;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -33,30 +33,36 @@ export class QuestionnaireComponent implements OnInit {
         })
       }),
       additionalOptions: this.formBuilder.group({
-        other: this.formBuilder.control(''),
-        questionIsRequired: this.formBuilder.control('')
+        other: this.formBuilder.control('')
       }),
-      question: this.formBuilder.group({
-          text: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
-          type: this.formBuilder.control('', [Validators.required, Validators.minLength(3)])
-      }),
-      answer: this.formBuilder.array([
-        this.answerGroup,
-        this.answerGroup,
-        this.answerGroup
-      ]) 
-
+      questionArray: this.formBuilder.array([
+        this.addQuestionField(),
+      ])
     })
   }
 
-  private get answerGroup(): FormGroup {
+  public addQuestionField(): FormGroup {
     return this.formBuilder.group({
-      answerOption: this.formBuilder.control(''),
-      selectComment: this.formBuilder.control(''),
-      comment: this.formBuilder.control('')
+      question: this.formBuilder.control(''),
+      type: this.formBuilder.control(''),
+      questionIsRequired: this.formBuilder.control(''),
+      answer: this.formBuilder.group({
+        answerOption: this.formBuilder.control(''),
+        selectComment: this.formBuilder.control(''),
+        comment: this.formBuilder.control('')
+      })
     })
   }
 
+  public addQuestionOption(): void {
+    const question: FormArray = this.questionnaireForm.get('questionArray')['controls'] as FormArray;
+    question.push(this.addQuestionField());
+  }
+
+  public removeQuestionOption(index: number): void {
+    const question: Array<FormGroup> = this.questionnaireForm.get('questionArray')['controls'];;
+    question.splice(index, 1);
+  }
 
   public submit(): void {
     const formValue = JSON.stringify(this.questionnaireForm.value);

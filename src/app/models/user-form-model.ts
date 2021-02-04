@@ -10,15 +10,17 @@ export interface IUserForm {
     };
     readonly additionalOptions: {
         readonly other: boolean;
-        readonly questionIsRequired: boolean;
     };
-    readonly question: {
-        readonly text: string;
-        readonly type: string;
-    };
-    readonly answer: [{
+    readonly questionArray: IQuestionForm[] 
+}
+
+interface IQuestionForm {
+    readonly question: string;
+    readonly type: string;
+    readonly questionIsRequired: boolean;
+    readonly answer: {
         readonly answerOption: string;
-        readonly selectComment: string;
+        readonly selectComment: boolean;
         readonly comment: string;
-    }]
+    }
 }

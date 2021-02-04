@@ -26,26 +26,29 @@
 </div>
 
 <div class="form-block">
-    <h3>Question:</h3>
+    <h3>Questions:</h3>
 
-    <p>Text: {{questionnaireValues.question.text}}</p>
-    <p>Type: {{questionnaireValues.question.type}}</p>
+    <ng-container *ngFor="let question of questionnaireValues.questionArray">
+        <ng-container *ngIf="question.question">
+            <h4>Question:</h4>
+            <p>{{question.question}}</p>
 
-    <hr>
+            <h4>Type:</h4>
+            <p>{{question.type}}</p>
 
-    <ng-container *ngFor="let answer of questionnaireValues.answer; let i = index">
-        <ng-container *ngIf="answer.answerOption">
-            <p>Option: {{answer.answerOption}}</p>
+            <h4>Answer:</h4>
+            <p>{{question.answer.answerOption}}</p>
 
-            <ng-container *ngIf="answer.selectComment">
-                <p>Comment: {{answer.comment}}</p>
+            <ng-container *ngIf="question.answer.selectComment">
+                <h4>Comment: </h4>
+                <p>{{question.answer.comment}}</p>
+            </ng-container>
+            
+            <ng-container *ngIf="question.questionIsRequired">
+                <h4>Required question</h4>
             </ng-container>
 
             <hr>
         </ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="questionnaireValues.additionalOptions.questionIsRequired">
-        <p>Question is required</p>
     </ng-container>
 </div>
