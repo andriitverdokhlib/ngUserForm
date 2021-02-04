@@ -37,7 +37,7 @@ export class QuestionnaireComponent implements OnInit {
       }),
       questionArray: this.formBuilder.array([
         this.addQuestionField(),
-      ])
+      ], { updateOn: 'submit' })
     })
   }
 
@@ -60,7 +60,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   public removeQuestionOption(index: number): void {
-    const question: Array<FormGroup> = this.questionnaireForm.get('questionArray')['controls'];;
+    const question: Array<FormGroup> = this.questionnaireForm.get('questionArray')['controls'];
     question.splice(index, 1);
   }
 
